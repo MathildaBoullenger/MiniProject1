@@ -1,0 +1,162 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Perfect Pet</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/1200px-Square_1.svg.png" alt="" width="30" height="24" class="d-inline-block align-text-top"> Perfect Pet
+            </a>
+        </div>
+    </nav>
+
+    <main>
+
+        <!--here we define the main structure in which the cards will be populated-->
+        <div class="container-fluid">
+            <div class="row" id="card-list"></div>
+        </div>
+
+        <!--below is our card template, or the structure of each individual card. The classes are used to style the items-->
+        <template id="card-template">
+            <div class="card-item col-lg-3 col-md-6 col-sm-12">
+                <div class="card h-100">
+                    <div class="card-category-icon"></div>
+                    <h5 class="card-title"></h5>
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text card-description"></p>
+                        <p class="card-text card-origin"></p>
+                        <a href="#" class="btn btn-primary">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+
+        <section class="question active">
+            <h1>Which type of pet are you looking for?</h1>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+            <div class="image-container" id="q0">
+                <img src="./assets/kote-puerto-so5nsYDOdxw-unsplash.jpg" height="500px" alt="Image 1" value="cat" onclick="nextQuestion()">
+                <img src="./assets/collie-beach-bokeh.jpg" height="500px" alt="Image 2" value="dog" onclick="nextQuestion()">
+                <img src="./assets/1200px-Square_1.svg.png" height="500px" alt="Image 3" value="either" onclick="nextQuestion()">
+            </div>
+        </section>
+
+        <section class="question" id="q1">
+            <p>Thanks for choosing! Answer 5 quick questions and discover which pet is best suited for you!</p>
+            <h1>Firstly, do you live in a family with kids?</h1>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="family" id="yesFamily" value="yesFamily" checked>
+                <label class="form-check-label" for="yesFamily">
+                    Yes
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="family" id="noFamily" value="noFamily">
+                <label class="form-check-label" for="noFamily">
+                    No
+                </label>
+            </div>
+            <div id="answerq1">
+                <button onclick="handleNextQuestion('answerq1', 'family')">Next</button>
+            </div>
+        </section>
+
+
+        <section class="question">
+            <h1>Do you live in an apartment or house?</h1>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="apartmentHouse" id="apartment" value="apartment" checked>
+                <label class="form-check-label" for="apartment">
+                    In an apartment
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="apartmentHouse" id="house" value="house">
+                <label class="form-check-label" for="house">
+                    In a house
+                </label>
+            </div>
+            <div id="answerq2">
+                <button onclick="handleNextQuestion('answerq2', 'apartmentHouse')">Next</button>
+            </div>
+        </section>
+
+        <section class="question">
+            <h1>Do you/ will you have other pets?</h1>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="otherPets" id="otherPetsYes" value="otherPetsYes" checked>
+                <label class="form-check-label" for="otherPetsYes">
+                    Yes
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="otherPets" id="otherPetsNo" value="otherPetsNo">
+                <label class="form-check-label" for="otherPetsNo">
+                    No
+                </label>
+            </div>
+            <div id="answerq3">
+                <button onclick="handleNextQuestion('answerq3', 'otherPets')">Next</button>
+            </div>
+        </section>
+
+        <section class="question">
+            <h1>Do you exercise often/ like the outdoors?</h1>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exercise" id="exerciseYes" value="exerciseYes" checked>
+                <label class="form-check-label" for="exerciseYes">
+                    Yes
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exercise" id="exampleRadios2" value="exerciseNo">
+                <label class="form-check-label" for="exerciseYes">
+                    No
+                </label>
+            </div>
+            <div id="answerq4">
+                <button onclick="handleNextQuestion('answerq4', 'exercise')">Next</button>
+            </div>
+        </section>
+
+        <section class="question">
+            <h1>How much free time do you have?</h1>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="freeTime" id="limitedFreeTime" value="limitedFreeTime" checked>
+                <label class="form-check-label" for="limitedFreeTime">
+                    Limited amount
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="freeTime" id="mostlyFree" value="mostlyFree">
+                <label class="form-check-label" for="mostlyFree">
+                    Mostly free
+                </label>
+            </div>
+            <div id="answerq5">
+                <button onclick="handleNextQuestion('answerq5', 'freeTime')">Next</button>
+            </div>
+        </section>
+
+    </main>
+    <script src="scripts1.js"></script>
+</body>
+
+</html>

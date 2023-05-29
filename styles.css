@@ -1,0 +1,64 @@
+main {
+    text-align: center;
+    margin: 100px;
+  }
+  
+.image-container img {
+            margin: 10px;
+            cursor: pointer;
+        }
+
+.question {
+            display: none;
+        }
+
+.question.active {
+            display: block;
+        }
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.card-title {
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.card-item {
+    flex-basis: 25%;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.card-price {
+    font-size: 16px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: contain;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-category-icon i {
+    font-size: 50px;
+    padding: 10px
+}
+
+.btn {
+    background-color: grey;
+    color: white;
+    border: 0;
+    outline: none;
+    align-items: center;
+}
