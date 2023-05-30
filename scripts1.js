@@ -25,27 +25,27 @@ const temperamentsGoodForFamilies = [
     "Tolerant",
     "Trusting",
     "Trustworthy",
-    //cats
-    "Affectionate",  
-    "Gentle",  
-    "Loyal",  
-    "Friendly",  
-    "Fun-loving",  
-    "Playful",  
-    "Social",  
-    "Loving",  
-    "Sweet",  
-    "Relaxed",  
-    "Patient",  
-    "Peaceful",  
-    "Devoted",  
-    "Sweet-tempered",  
-    "Outgoing",  
+    // cats
+    "Affectionate",
+    "Gentle",
+    "Loyal",
+    "Friendly",
+    "Fun-loving",
+    "Playful",
+    "Social",
+    "Loving",
+    "Sweet",
+    "Relaxed",
+    "Patient",
+    "Peaceful",
+    "Devoted",
+    "Sweet-tempered",
+    "Outgoing",
     "Sociable"
 ];
 
 const temperamentsGoodForApartments = [
-    //dogs
+    // dogs
     'Adaptable',
     'Alert',
     'Calm',
@@ -60,10 +60,10 @@ const temperamentsGoodForApartments = [
     'Steady',
     'Unflappable',
     'Watchful',
-    //cats
-    "Calm", 
-    "Quiet", 
-    "Relaxed", 
+    // cats
+    "Calm",
+    "Quiet",
+    "Relaxed",
     "Easygoing",
     "Sedate",
     "Easy",
@@ -73,7 +73,7 @@ const temperamentsGoodForApartments = [
 ];
 
 const temperamentsGoodWithOtherPets = [
-    //dogs
+    // dogs
     'Adaptable',
     'Affectionate',
     'Amiable',
@@ -88,7 +88,7 @@ const temperamentsGoodWithOtherPets = [
     'Tolerant',
     'Trusting',
     'Trustworthy',
-    //cats
+    // cats
     "Social",
     "Friendly",
     "Playful",
@@ -99,7 +99,7 @@ const temperamentsGoodWithOtherPets = [
 ];
 
 const temperamentsNeedsActiveLifestyle = [
-    //dogs
+    // dogs
     'Active',
     'Adventurous',
     'Agile',
@@ -118,21 +118,21 @@ const temperamentsNeedsActiveLifestyle = [
     'Wild',
     'Willed',
     'Willful',
-    //cats
+    // cats
     "Active",
     "Energetic",
-    "Agile",  
-    "Fun-loving",  
-    "Lively",  
-    "Highly interactive",  
-    "Mischievous",  
-    "Adventurous",  
-    "Tenacious",  
+    "Agile",
+    "Fun-loving",
+    "Lively",
+    "Highly interactive",
+    "Mischievous",
+    "Adventurous",
+    "Tenacious",
     "Inquisitive"
 ];
 
 const temperamentsNeedTime = [
-    //dogs
+    // dogs
     'Affectionate',
     'Attentive',
     'Composed',
@@ -147,7 +147,7 @@ const temperamentsNeedTime = [
     'Sociable',
     'Thoughtful',
     'Trainable',
-    //cats
+    // cats
     "Interactive",
     "Affectionate",
     "Loving",
@@ -194,7 +194,7 @@ function nextQuestion() {
 }
 
 // ---- Step 0 - Get all data ----
-// Get the dogs, cats, the cat tempraments, dog tempraments, question answers, etc. and store them as constants here
+// Get the dogs, cats, the cat temperaments, dog temperaments, question answers, etc. and store them as constants here
 
 const dogsPromise = fetch('https://api.thedogapi.com/v1/breeds').then((response) => response.json()).then((data) => { // console.log(data);
     return data;
@@ -202,7 +202,7 @@ const dogsPromise = fetch('https://api.thedogapi.com/v1/breeds').then((response)
 
 const catsPromise = fetch('https://api.thecatapi.com/v1/breeds').then((response) => response.json()).then((data) => { // console.log(data)
     return data;
-    
+
 });
 
 // Output the answers to the console or perform any other operations with them
@@ -230,7 +230,7 @@ function scorePets(answers) {
         const catsTemperaments = Array.from(new Set(extractCatTemperaments(cats))); // to get the unique ones
         console.log(catsTemperaments);
 
-        // now we have the adjectives that will give dogs points
+        // now we have the adjectives
 
         // ---- Step 1 - Initialise an empty scored pets table ----
         let scoredPets = [];
@@ -244,6 +244,7 @@ function scorePets(answers) {
                 ...dogs,
                 ...cats
             ];
+            
         } scoredPets = scoredPets.map((pet) => {
             pet.score = 0;
             return pet;
@@ -323,8 +324,8 @@ function scorePets(answers) {
                 };
                 const petsTemperaments = pet.temperament.split(", ");
                 petsTemperaments.forEach((petTemperament) => {
-                    const needsActiveLifestyle = temperamentsNeedsActiveLifestyle.includes(petTemperament);
-                    if (needsActiveLifestyle) {
+                    const needsTime = temperamentsNeedTime.includes(petTemperament);
+                    if (needsTime) {
                         pet.score ++;
                     }
                 })
@@ -333,85 +334,92 @@ function scorePets(answers) {
         }
         console.log("step 2 output", scoredPets);
 
-// To find the top 3, sort the pets in order of score (look up array sorting), and then take the first 3 (slice)
-    
-const sortedScoresPetsList = scoredPets.sort(function(a, b) {
-    return b.score - a.score;
-  });
+        // To find the top 3, we sort the pets in order of score (look up array sorting), and then take the first 3 (slice)
 
-const top3ScoresPetsList = sortedScoresPetsList.slice(0,3);
+        const sortedScoresPetsList = scoredPets.sort(function (a, b) {
+            return b.score - a.score;
+        });
 
-console.log(top3ScoresPetsList);
+        // we add this to a new object e.g. const top3Pets
+        // const top3Pets = scoredPets.sort(...).slice(3);
 
-// add this to a new object e.g. const top3Pets
-// const top3Pets = scoredPets.sort(...).slice(3);
+        const top3ScoresPetsList = sortedScoresPetsList.slice(0, 3);
 
-function createCard (name, image, description, bred_for, temperament) { /*we need to clone the content to create a new instance of the template*/
-    const template = document.getElementById('card-template').content.cloneNode(true);
-    // we assign the card icon and title elements to a variable we can manipulate
-    const cardCategoryIcon = template.querySelector('.card-category-icon');
-    const cardTitle = template.querySelector('.card-title');
-    // in the line below, we simply define that the text inside of this element is the title.
-    cardTitle.innerText = name;
-    template.querySelector('.card-img-top').src = image; // we use the template variable to define each element within it and store it in a new variable
-    template.querySelector('.card-description').innerText = description || bred_for;
-    template.querySelector('.card-origin').innerText = temperament;
-    document.querySelector('#card-list').appendChild(template);
-    // finally, we create the card by appending the template as a child of the '#card-list' element in the document.
+        console.log(top3ScoresPetsList);
 
-    // and the following section is used to add the icons from "font-awesome". To use those, we need to add the CDN link of the library to the head of the document
-    // to do so, we go through each category, using the switch statement
-    switch (answers.answerq0) {
-        case 'dog': cardCategoryIcon.innerHTML = '<i class="fas fa-dog"></i>';
-            break;
-        case 'cat': cardCategoryIcon.innerHTML = '<i class="fas fa-cat"></i>';
-            break;
-        default: cardCategoryIcon.innerHTML = '<i class="fas fa-box"></i>'; // in case there is an issue with the icons above, this icon will display by default
-    }
-};
+        let catsImages= [];
+        const catsImagesPromise = fetch('https://api.thecatapi.com/v1/breeds')
+       .then((response) => response.json())
+       .then((data) => {
+        catsImages = data.map((cat) => cat.reference_image_id);
+        });
 
-top3ScoresPetsList.forEach((pet) => {
-    createCard(pet.name, pet.image, pet.description, pet.bred_for, pet.temperament);
-});
+        function createCard(name, reference_image_id, description, bred_for, origin, temperament) { /*we need to clone the content to create a new instance of the template*/
+            const template = document.getElementById('card-template').content.cloneNode(true);
+            // we assign the card icon and title elements to a variable we can manipulate
+            const cardTypeIcon = template.querySelector('.card-type-icon');
+            const cardTitle = template.querySelector('.card-title');
+            // in the line below, we simply define that the text inside of this element is the title.
+            cardTitle.innerText = name;
+
+            if (answers.answerq0 ==='dog') {
+              imageUrl = `https://cdn2.thedogapi.com/images/${reference_image_id}.jpg`;
+              cardTypeIcon.innerHTML = '<i class="fas fa-dog"></i>';
+            } else if (answers.answerq0 === 'cat') {
+              imageUrl = `https://cdn2.thecatapi.com/images/${reference_image_id}.jpg`;
+              cardTypeIcon.innerHTML = '<i class="fas fa-cat"></i>';
+            } else if (answers.answerq0 === 'either') {
+                if (catsImages.includes(reference_image_id)) {
+                  imageUrl = `https://cdn2.thecatapi.com/images/${reference_image_id}.jpg`;
+                  cardTypeIcon.innerHTML = '<i class="fas fa-cat"></i>';
+                } else {
+                  imageUrl = `https://cdn2.thedogapi.com/images/${reference_image_id}.jpg`;
+                  cardTypeIcon.innerHTML = '<i class="fas fa-dog"></i>';
+                }
+              }
+            template.querySelector('.card-img-top').src = imageUrl; // image.url works for dogs. we use the template variable to define each element within it and store it in a new variable
+            template.querySelector('.card-description').innerText = description || bred_for;
+            template.querySelector('.card-origin').innerText = origin || temperament;
+            document.querySelector('#card-list').appendChild(template);
+            // finally, we create the card by appending the template as a child of the '#card-list' element in the document.
+
+            // and the following section is used to add the icons from "font-awesome". To use those, we need to add the CDN link of the library to the head of the document
+            // to do so, we go through each category, using the switch statement
+           /* switch (answers.answerq0) {
+                case 'dog': cardTypeIcon.innerHTML = '<i class="fas fa-dog"></i>';
+                    break;
+                case 'cat': cardTypeIcon.innerHTML = '<i class="fas fa-cat"></i>';
+                    break;
+                default: cardTypeIcon.innerHTML = '<i class="fas fa-box"></i>'; // in case there is an issue with the icons above, this icon will display by default
+            // need new logic to show the right icon based on whether its a cat or a dog
+            }*/
+        };
+
+        top3ScoresPetsList.forEach((pet) => {
+            createCard(pet.name, pet.reference_image_id, pet.description, pet.bred_for, pet.origin, pet.temperament);
+        });
 
     });
 
-    };
-
-/*
-scoredPets = scoredPets.map((pet) => {
-    const isGoodForFaility = tempramentsGoodForFamiles.includes(pet.temrament) && userSelectedFamily;
-    if (isGoodForFaility) {
-        pet.score++;
-    }
-    return pet;
-})
-
-
-
-
-
-});
-
-*/
+};
 
 
 /*
 // e.g. const dogs = await getDogsPromise()
-//      const dogTempraments = getDogTempraments(dogs)
+//      const dogTemperaments = getDogTemperaments(dogs)
 //      const q1Answer = documents.get...
-//      const tempramentsThatAreGoodForFamilies = [];
-//      const tempramentsThatAreGoodForAppartments = [];
+//      const temperamentsThatAreGoodForFamilies = [];
+//      const temperamentsThatAreGoodForApartments = [];
 const dogs = await ... 
 const didSelectCasts = ...
 
-// ---- Step 1 - Initialise an empty scored pets table ----
+// ---- Step 1 - We initialise an empty scored pets array ----
 
 let scoredPets = [];
 
-// ---- Step 2 - For each question/answer, alter the scoredPets array ----
-// E.g. for q1Answer, if dogs then add the dogs to the array, if cats then add the cats, if both then add both
-// E.g. for q2Answer, if the temprament is good faimilies, then add +1 score the the matching mets in the scoredPets list
+// ---- Step 2 - For each question/answer, we alter the scoredPets array ----
+// E.g. for q1Answer, if dogs then we add the dogs to the array, if cats then add the cats, if both then add both
+// E.g. for q2Answer, if the temperament is good families, then we add +1 score the the matching pets in the scoredPets list
 
 // Q1
 if (didSelectDogs) {
@@ -430,24 +438,19 @@ scoredPets = scoredPets.map((pet) => {
 
 // Q2
 scoredPets = scoredPets.map((pet) => {
-    const isGoodForFaility = tempramentsGoodForFamiles.includes(pet.temrament) && userSelectedFamily;
-    if (isGoodForFaility) {
+    const isGoodForFamily = temperamentsGoodForFamilies.includes(pet.temperament) && userSelectedFamily;
+    if (isGoodForFamily) {
         pet.score++;
     }
     return pet;
 })
 
-
-
-
 // ---- Step 3 - Finds the top 2 pets ----
-// Now you have a list of pets and their score
-// To find the top 3, sort the pets in order of score (look up array sorting), and then take the first 3 (slice)
+// Now we have a list of pets and their score
+// To find the top 3, we sort the pets in order of score (look up array sorting), and then take the first 3 (slice)
 // add this to a new object e.g. const top3Pets
 // const top3Pets = scoredPets.sort(...).slice(3);
 
-
-
-// ---- Step 4 - Make cards from your top 3 pets and show on the screen ----
+// ---- Step 4 - We Make cards from your top 3 pets and show on the screen ----
 // 
 */

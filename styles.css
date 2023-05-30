@@ -30,7 +30,7 @@ main {
 }
 
 .card-item {
-    flex-basis: 25%;
+    flex-basis: 33%;
     padding: 10px;
     font-size: 12px;
 }
@@ -62,3 +62,24 @@ main {
     outline: none;
     align-items: center;
 }
+
+#answerq1,
+#answerq2,
+#answerq3,
+#answerq4,
+#answerq5 {
+    margin: 10px; 
+}
+
+#answerq1 button,
+#answerq2 button,
+#answerq3 button,
+#answerq4 button,
+#answerq5 button {
+    background-color: grey;
+    color: white;
+    border: 0;
+    outline: none;
+    padding: 10px 20px;
+}
+

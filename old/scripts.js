@@ -124,7 +124,6 @@ Promise.all([dogsTemperaments, catsTemperaments])
 
 
 /**
- *  Josh Psudo-code
  */
 
 // ---- Step 0 - Get all data ----
